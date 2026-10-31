@@ -1,0 +1,16 @@
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504
+## Title: ViewerLog |cff9955ff[Réputations]|r
+## Notes: Scan des réputations pour ViewerLog
+## Author: SoLoup_ever
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\ViewerLog/logo_vl.blp
+## RequiredDeps: ViewerLog
+
+## ── SCANNER ──────────────────────────────────────────────────────
+scanner\Reputation.lua
+
+## ── INTERFACE (infobulle réputation Blizzard native) ─────────────
+ui\BlizzReputTooltip.lua
+
+## ── INIT — Chargé en dernier ─────────────────────────────────────
+Init.lua

@@ -1,0 +1,14 @@
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504
+## Title: ViewerLog |cff9955ff[Métiers]|r
+## Notes: Scan des métiers pour ViewerLog (base + approfondi)
+## Author: SoLoup_ever
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\ViewerLog/logo_vl.blp
+## RequiredDeps: ViewerLog
+
+## ── SCANNER ──────────────────────────────────────────────────────
+scanner\Professions.lua
+scanner\Deep.lua
+
+## ── INIT — Chargé en dernier ─────────────────────────────────────
+Init.lua

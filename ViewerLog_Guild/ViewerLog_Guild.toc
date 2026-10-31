@@ -1,0 +1,17 @@
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504
+## Title: ViewerLog |cff9955ff[Guilde]|r
+## Notes: Scan du coffre de guilde pour ViewerLog
+## Author: SoLoup_ever
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\ViewerLog/logo_vl.blp
+## RequiredDeps: ViewerLog
+
+## ── LOCALISATION ─────────────────────────────────────────────────
+locales\Locales_frFR.lua
+locales\Locales_enUS.lua
+
+## ── SCANNER ──────────────────────────────────────────────────────
+scanner\Guild.lua
+
+## ── INIT — Chargé en dernier ─────────────────────────────────────
+Init.lua

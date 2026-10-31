@@ -1,0 +1,63 @@
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504
+## Title: ViewerLog
+## Notes: Gestionnaire d'inventaire multi-personnages avec infobulles enrichies
+## Author: SoLoup_ever
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\ViewerLog/logo_vl.blp
+## SavedVariables: ViewerLogDB
+
+## Category-enUS: Inventory
+## Category-deDE: Inventar
+## Category-esES: Inventario
+## Category-esMX: Inventario
+## Category-frFR: Inventaire
+## Category-itIT: Inventario
+## Category-koKR: 소지품
+## Category-ptBR: Inventário
+## Category-ruRU: Предметы
+## Category-zhCN: 物品栏
+## Category-zhTW: 物品欄
+
+## ── LIBS (en premier : toute la suite en dépend) ──────────────────
+libs\LibStub\LibStub.lua
+libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+
+## ── LOCALISATION ─────────────────────────────────────────────────
+locales\Locales_frFR.lua
+locales\Locales_enUS.lua
+
+## ── NOYAU ─────────────────────────────────────────────────────────
+core\Init.lua
+core\Events.lua
+
+## ── SCANNERS ──────────────────────────────────────────────────────
+scanner\Container.lua
+scanner\Index.lua
+scanner\Character.lua
+scanner\Bags.lua
+scanner\Bank.lua
+scanner\Mail.lua
+
+## ── API ───────────────────────────────────────────────────────────
+api\API.lua
+
+## ── UI / PARAMÈTRES ───────────────────────────────────────────────
+options\Theme.lua
+options\themes\Hybrid.lua
+options\themes\Blizzard.lua
+options\ScrollBarSkin.lua
+options\Widgets.lua
+options\PanelResize.lua
+options\Tabs.lua
+options\DiscordButton.lua
+options\TooltipPreview.lua
+options\TooltipSection.lua
+options\Dependencies.lua
+options\ThemePage.lua
+options\Popups.lua
+options\CharacterList.lua
+options\GuildList.lua
+options\Panel.lua
+options\Minimap.lua
+
+
