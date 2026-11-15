@@ -1,13 +1,10 @@
 local addonName, ns = ...
 
--- Scanner : utilitaire de conteneur partagé (sac, banque).
--- Utilisé par Bags.lua, Bank.lua.
+-- Utilitaires partagés des scanners (sac, banque).
 
 -- Écrit le contenu de `bag` dans dest[bag] = { [slot] = {id, count, link} }.
--- Réutilise les tables existantes (moins de pression GC sur scans répétés).
--- link = hyperlink complet : nécessaire pour les objets dont les stats
--- dépendent de l'instance (niveau d'amélioration, sockets…).
--- Bag sans slot (onglet non acheté / pas en cache) → dest[bag] retiré.
+-- Réutilise les tables existantes (moins de GC). link = hyperlink complet
+-- (stats dépendantes de l'instance). Bag sans slot → dest[bag] retiré.
 function ns.ScanContainerInto(bag, dest)
     local numSlots = C_Container.GetContainerNumSlots(bag)
     if not numSlots or numSlots == 0 then
@@ -37,10 +34,20 @@ function ns.ScanContainerInto(bag, dest)
         end
     end
 
-    -- Purge des slots > numSlots restés d'un scan précédent (conteneur rétréci).
+    -- Slots résiduels (conteneur rétréci).
     for slot in pairs(bagTable) do
         if slot > numSlots then
             bagTable[slot] = nil
+        end
+    end
+end
+
+-- Reconstruit l'infobulle visible avec l'index à jour.
+function ns.RefreshTooltip()
+    if GameTooltip:IsShown() then
+        local _, link = GameTooltip:GetItem()
+        if link then
+            GameTooltip:SetHyperlink(link)
         end
     end
 end

@@ -62,6 +62,7 @@ ns.locales["frFR"] = {
     SECTION_DEP_VL       = "ViewerLog",
     SECTION_DEP_AVL      = "AltViewerLog",
 
+    DEP_ITEMS            = "Objets |cffb45cff(ViewerLog_Items)|r",
     DEP_TOOLTIP          = "Infobulle |cffb45cff(ViewerLog_Tooltip)|r",
     DEP_GUILD            = "Guilde |cff4a9eff(ViewerLog_Guild)|r",
     DEP_REPUT            = "Réputations |cffb45cff(ViewerLog_Reput)|r",

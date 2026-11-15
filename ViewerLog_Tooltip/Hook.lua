@@ -50,7 +50,7 @@ local function AppendInfo(tooltip, itemID)
     if s.disableTooltip then return end
     if s.tooltipOnShift and not IsShiftKeyDown() then return end
 
-    local entry = VL.GetTooltipEntry(itemID)
+    local entry = VL.GetTooltipEntry and VL.GetTooltipEntry(itemID)
     if not entry then return end
 
     local showIcons  = not s.hideTooltipIcons

@@ -1,0 +1,37 @@
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504
+## Title: ViewerLog |cff9955ff[Objets]|r
+## Notes: Scan des objets (sacs, banque, courrier, enchères) et index d'infobulle pour ViewerLog
+## Author: SoLoup_ever
+## Version: 1.0.0
+## RequiredDeps: ViewerLog
+## IconTexture: Interface\AddOns\ViewerLog\logo_vl.blp
+
+## Category-enUS: Database
+## Category-deDE: Datenbank
+## Category-esES: Base de datos
+## Category-esMX: Base de datos
+## Category-frFR: Base de données
+## Category-itIT: Database
+## Category-koKR: 데이터베이스
+## Category-ptBR: Banco de dados
+## Category-ruRU: База данных
+## Category-zhCN: 数据库
+## Category-zhTW: 資料庫
+
+Link.lua
+
+## ── SCANNERS ──────────────────────────────────────────────────────
+scanner\Container.lua
+scanner\Bags.lua
+scanner\Bank.lua
+scanner\Mail.lua
+scanner\Auctions.lua
+
+## ── INDEX INFOBULLE ───────────────────────────────────────────────
+index\Index.lua
+
+## ── API ───────────────────────────────────────────────────────────
+api\API.lua
+
+## ── INIT — Chargé en dernier ─────────────────────────────────────
+Init.lua

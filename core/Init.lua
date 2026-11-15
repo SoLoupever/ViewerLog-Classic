@@ -9,7 +9,7 @@ _G.ViewerLogAPI = {}
 
 -- Version du contrat d'API publique (≠ version .toc). À incrémenter sur
 -- tout changement cassant de l'API ou du format ViewerLogDB.
-ns.API_VERSION = 1
+ns.API_VERSION = 2
 
 -- ── Clés réservées dans ViewerLogDB (non-realms) ────────────
 
@@ -63,8 +63,7 @@ SlashCmdList["VIEWERLOG"] = function(msg)
         if ns.OpenOptions then ns.OpenOptions() end
 
     elseif msg == "scan" then
-        ns.ScanBags("MANUAL")
-        ns.ScanBank()
+        if vlAPI and vlAPI.ScanItems then vlAPI.ScanItems() end
         if vlAPI and vlAPI.ScanBasicProfessions then vlAPI.ScanBasicProfessions() end
         print("|cff9955ff[ViewerLog]|r " .. ns.L("SLASH_SCAN_DONE"))
 

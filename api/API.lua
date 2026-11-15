@@ -19,7 +19,43 @@ function ns.OpenOptionsPanel()
     if ns.OpenOptions then ns.OpenOptions() end
 end
 
+-- ── Callbacks ─────────────────────────────────────────────────────
+-- Notifie les modules sans les connaître.
+-- Événements : CHARACTER_DELETED(realm, char), GUILD_DELETED(guildKey).
+local listeners = {}
+
+function ns.RegisterCallback(event, fn)
+    if type(event) ~= "string" or type(fn) ~= "function" then return false end
+    local list = listeners[event]
+    if not list then
+        list = {}
+        listeners[event] = list
+    end
+    list[#list + 1] = fn
+    return true
+end
+
+local function Fire(event, ...)
+    local list = listeners[event]
+    if not list then return end
+    for i = 1, #list do
+        local ok, err = pcall(list[i], ...)
+        if not ok then geterrorhandler()(err) end
+    end
+end
+
 -- ── Personnages ───────────────────────────────────────────────────
+
+-- cb(charName, realmName, charData) pour chaque personnage connu.
+function ns.ForEachCharacter(cb)
+    for realmName, realmData in pairs(ViewerLogDB) do
+        if ns.IsRealm(realmName, realmData) then
+            for charName, charData in pairs(realmData) do
+                if type(charData) == "table" then cb(charName, realmName, charData) end
+            end
+        end
+    end
+end
 
 -- Liste des clés "Nom@Realm".
 function ns.GetAllCharacters()
@@ -46,19 +82,6 @@ function ns.GetCharacter(charName, realmName)
     return ViewerLogDB[realmName] and ViewerLogDB[realmName][charName]
 end
 
--- ── Inventaire ────────────────────────────────────────────────────
--- Format sacs/banque : { [bagIndex] = { [slot] = { id, count } } }
-
-function ns.GetBags(charName, realmName)
-    local d = ns.GetCharacter(charName, realmName)
-    return d and d.bags
-end
-
-function ns.GetBank(charName, realmName)
-    local d = ns.GetCharacter(charName, realmName)
-    return d and d.bank
-end
-
 -- ── Or (en cuivres) ───────────────────────────────────────────────
 
 function ns.GetGold(charName, realmName)
@@ -79,24 +102,14 @@ end
 
 -- Réimplémentée ici (et non déléguée à ViewerLog_Guild) pour rester
 -- fonctionnelle même sans cette dépendance : nettoyage de données résiduelles.
+-- Notifie les modules (GUILD_DELETED).
 function ns.DeleteGuildData(guildKey)
     if not guildKey or not ViewerLogDB.guilds or not ViewerLogDB.guilds[guildKey] then
         return false
     end
     ViewerLogDB.guilds[guildKey] = nil
-    ns.InvalidateIndexAll()
+    Fire("GUILD_DELETED", guildKey)
     return true
-end
-
--- ── Infobulles ────────────────────────────────────────────────────
-
--- Infos de possession pour un itemID (via index pré-construit, O(1)).
-function ns.GetInventoryInfo(itemID)
-    return ns.tooltipIndex and ns.tooltipIndex[itemID]
-end
-
-function ns.RefreshIndex()
-    ns.InvalidateIndexAll()
 end
 
 -- ── Personnage courant ────────────────────────────────────────────
@@ -122,7 +135,7 @@ end
 
 -- ── Suppression ───────────────────────────────────────────────────
 
--- Supprime un perso et invalide l'index tooltip.
+-- Supprime un perso et notifie les modules (CHARACTER_DELETED).
 function ns.DeleteCharacter(realm, char)
     if not realm or not char then return false end
     if ViewerLogDB[realm] and ViewerLogDB[realm][char] then
@@ -130,7 +143,7 @@ function ns.DeleteCharacter(realm, char)
         if not next(ViewerLogDB[realm]) then
             ViewerLogDB[realm] = nil
         end
-        ns.InvalidateIndexAll()
+        Fire("CHARACTER_DELETED", realm, char)
         return true
     end
     return false
@@ -176,8 +189,10 @@ end
 -- ── Table d'API publique ──────────────────────────────────────────
 -- Peuple _G.ViewerLogAPI (créée vide par core/Init.lua). Seules ces
 -- fonctions sont exposées ; le namespace interne (ns) reste privé.
--- GetCurrentCharData / InvalidateIndex sont exposées pour les dépendances
--- (Guild / Reput / Professions), qui ont leur propre ns.
+-- GetCurrentCharData / ForEachCharacter / RegisterCallback sont exposées pour
+-- les dépendances (Items / Guild / Reput / Professions), qui ont leur propre ns.
+-- GetBags / GetBank / GetInventoryInfo / GetTooltipEntry / InvalidateIndex / ScanItems
+-- sont posées par ViewerLog_Items (absentes si non installé).
 local pub = _G.ViewerLogAPI
 pub.API_VERSION                 = ns.API_VERSION
 pub.L                           = ns.L
@@ -188,18 +203,13 @@ pub.GetAllCharacters            = ns.GetAllCharacters
 pub.GetCharacterByKey           = ns.GetCharacterByKey
 pub.GetCharacter                = ns.GetCharacter
 pub.GetCurrentCharData          = ns.GetCurrentCharData
-pub.GetBags                     = ns.GetBags
-pub.GetBank                     = ns.GetBank
+pub.ForEachCharacter            = ns.ForEachCharacter
+pub.RegisterCallback            = ns.RegisterCallback
 pub.GetGold                     = ns.GetGold
 pub.GetAllGuilds                = ns.GetAllGuilds
 pub.GetGuild                    = ns.GetGuild
 pub.DeleteGuildData              = ns.DeleteGuildData
 pub.DeleteCharacter             = ns.DeleteCharacter
-pub.GetInventoryInfo            = ns.GetInventoryInfo
--- Exposée pour l'addon ViewerLog_Tooltip (applique les rebuilds lazy avant lecture).
-pub.GetTooltipEntry             = ns.GetTooltipEntry
-pub.RefreshIndex                = ns.RefreshIndex
-pub.InvalidateIndex             = ns.InvalidateIndex
 pub.GetCurrentCharacterKey      = ns.GetCurrentCharacterKey
 pub.GetReputations              = ns.GetReputations
 pub.GetEstimatedRestedPct       = ns.GetEstimatedRestedPct

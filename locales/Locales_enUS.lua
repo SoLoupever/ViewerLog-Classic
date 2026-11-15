@@ -60,6 +60,7 @@ ns.locales["enUS"] = {
     SECTION_DEP_VL       = "ViewerLog",
     SECTION_DEP_AVL      = "AltViewerLog",
 
+    DEP_ITEMS            = "Items |cffb45cff(ViewerLog_Items)|r",
     DEP_TOOLTIP          = "Tooltip |cffb45cff(ViewerLog_Tooltip)|r",
     DEP_GUILD            = "Guild |cff4a9eff(ViewerLog_Guild)|r",
     DEP_REPUT            = "Reputations |cffb45cff(ViewerLog_Reput)|r",

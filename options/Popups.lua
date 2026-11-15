@@ -30,8 +30,7 @@ StaticPopupDialogs["VL_DEL_GUILD"] = {
     button2  = ns.L("CANCEL_BTN"),
     OnAccept = function(_, data)
         if not data then return end
-        if ViewerLogDB.guilds then ViewerLogDB.guilds[data.key] = nil end
-        ns.InvalidateIndexAll()
+        ns.DeleteGuildData(data.key)
         if ns._optRefreshGuilds then ns._optRefreshGuilds() end
     end,
     timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
