@@ -37,13 +37,31 @@ function ns.IsRealm(key, value)
     return true
 end
 
+-- (realm, nom) du perso connecté, mis en cache une fois valide.
+-- Forever : noms uniques régionaux, le nom seul n'est pas unique.
+-- API non documentée (Ketho/Gethe) : repris de Syndicator.
+local _realm, _name
+function ns.GetPlayerIdentity()
+    if _name then return _realm, _name end
+    local realm = GetRealmName()
+    local name, extra = UnitName("player")
+    if not realm or realm == "" or not name or name == "" then
+        return nil, nil
+    end
+    if RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled()
+       and extra and extra ~= "" then
+        local sep = Constants and Constants.CharacterNameSeparatorConsts
+            and Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR
+        if sep then name = name .. sep .. extra end
+    end
+    _realm, _name = realm, name
+    return realm, name
+end
+
 -- (charData, realm, player) du perso connecté ; crée les entrées manquantes.
 function ns.GetCurrentCharData()
-    local realm  = GetRealmName()
-    local player = UnitName("player")
-    if not realm or realm == "" or not player or player == "" then
-        return nil, nil, nil
-    end
+    local realm, player = ns.GetPlayerIdentity()
+    if not realm then return nil, nil, nil end
     ViewerLogDB[realm]         = ViewerLogDB[realm] or {}
     ViewerLogDB[realm][player] = ViewerLogDB[realm][player] or {}
     return ViewerLogDB[realm][player], realm, player

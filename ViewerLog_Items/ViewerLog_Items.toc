@@ -5,18 +5,17 @@
 ## Version: 1.0.0
 ## RequiredDeps: ViewerLog
 ## IconTexture: Interface\AddOns\ViewerLog\logo_vl.blp
-
-## Category-enUS: Database
-## Category-deDE: Datenbank
-## Category-esES: Base de datos
-## Category-esMX: Base de datos
-## Category-frFR: Base de données
-## Category-itIT: Database
-## Category-koKR: 데이터베이스
-## Category-ptBR: Banco de dados
-## Category-ruRU: База данных
-## Category-zhCN: 数据库
-## Category-zhTW: 資料庫
+## Category-enUS: Inventory
+## Category-deDE: Inventar
+## Category-esES: Inventario
+## Category-esMX: Inventario
+## Category-frFR: Inventaire
+## Category-itIT: Inventario
+## Category-koKR: 소지품
+## Category-ptBR: Inventário
+## Category-ruRU: Предметы
+## Category-zhCN: 物品栏
+## Category-zhTW: 物品欄
 
 Link.lua
 

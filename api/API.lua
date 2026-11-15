@@ -115,8 +115,7 @@ end
 -- ── Personnage courant ────────────────────────────────────────────
 
 function ns.GetCurrentCharacterKey()
-    local player = UnitName("player")
-    local realm  = GetRealmName()
+    local realm, player = ns.GetPlayerIdentity()
     if player and realm then
         return player .. "@" .. realm
     end
@@ -211,6 +210,7 @@ pub.GetGuild                    = ns.GetGuild
 pub.DeleteGuildData              = ns.DeleteGuildData
 pub.DeleteCharacter             = ns.DeleteCharacter
 pub.GetCurrentCharacterKey      = ns.GetCurrentCharacterKey
+pub.GetPlayerIdentity           = ns.GetPlayerIdentity
 pub.GetReputations              = ns.GetReputations
 pub.GetEstimatedRestedPct       = ns.GetEstimatedRestedPct
 pub.GetFactionIconPath          = ns.GetFactionIconPath

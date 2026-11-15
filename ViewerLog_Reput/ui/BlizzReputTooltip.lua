@@ -72,7 +72,8 @@ local function AppendBestCharLine(tooltip, fid, isAccountWide)
     local bChar, bRealm, bClass, bData = GetBestCharacter(fid)
     if not bChar or not bData then return end
     -- Inutile si c'est le perso connecté (déjà affiché par Blizzard).
-    if bChar == UnitName("player") and bRealm == GetRealmName() then return end
+    local myRealm, myName = _G.ViewerLogAPI.GetPlayerIdentity()
+    if bChar == myName and bRealm == myRealm then return end
 
     local t  = T()
     local cc = (bClass and RAID_CLASS_COLORS and RAID_CLASS_COLORS[bClass])
