@@ -1,13 +1,13 @@
-package-as: ViewerLog-Classic
+package-as: ViewerLog
 
 move-folders:
-  ViewerLog-Classic/ViewerLog_Guild: ViewerLog_Guild
-  ViewerLog-Classic/ViewerLog_Items: ViewerLog_Items
-  ViewerLog-Classic/ViewerLog_Monnaie: ViewerLog_Monnaie
-  ViewerLog-Classic/ViewerLog_Professions: ViewerLog_Professions
-  ViewerLog-Classic/ViewerLog_Recette: ViewerLog_Recette
-  ViewerLog-Classic/ViewerLog_Reput: ViewerLog_Reput
-  ViewerLog-Classic/ViewerLog_Tooltip: ViewerLog_Tooltip
+  ViewerLog/ViewerLog_Guild: ViewerLog_Guild
+  ViewerLog/ViewerLog_Items: ViewerLog_Items
+  ViewerLog/ViewerLog_Monnaie: ViewerLog_Monnaie
+  ViewerLog/ViewerLog_Professions: ViewerLog_Professions
+  ViewerLog/ViewerLog_Recette: ViewerLog_Recette
+  ViewerLog/ViewerLog_Reput: ViewerLog_Reput
+  ViewerLog/ViewerLog_Tooltip: ViewerLog_Tooltip
 
 ignore:
   - .github
