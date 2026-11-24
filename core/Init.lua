@@ -37,22 +37,36 @@ function ns.IsRealm(key, value)
     return true
 end
 
+-- Forever : le royaume n'existe plus, la clé devient le ruleset et le nom
+-- prend le nom de famille.
+local function GetRulesetName()
+    local active, rule = C_GameRules.IsGameRuleActive, Enum.GameRule
+    local pvp = rule.PvPRuleset and active(rule.PvPRuleset)
+    local rp  = rule.RPRuleset and active(rule.RPRuleset)
+    if pvp and rp then return "RPPvP" end
+    if pvp then return "PvP" end
+    if rp then return "RP" end
+    if rule.HardcoreRuleset and active(rule.HardcoreRuleset) then return "HC" end
+    return "PvE"
+end
+
 -- (realm, nom) du perso connecté, mis en cache une fois valide.
--- Forever : noms uniques régionaux, le nom seul n'est pas unique.
--- API non documentée (Ketho/Gethe) : repris de Syndicator.
 local _realm, _name
 function ns.GetPlayerIdentity()
     if _name then return _realm, _name end
-    local realm = GetRealmName()
     local name, extra = UnitName("player")
-    if not realm or realm == "" or not name or name == "" then
-        return nil, nil
-    end
-    if RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled()
-       and extra and extra ~= "" then
+    if not name or name == "" then return nil, nil end
+
+    local realm
+    if RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled() then
         local sep = Constants and Constants.CharacterNameSeparatorConsts
             and Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR
-        if sep then name = name .. sep .. extra end
+        if not (sep and extra and extra ~= "") then return nil, nil end
+        name  = name .. sep .. extra
+        realm = GetRulesetName()
+    else
+        realm = GetRealmName()
+        if not realm or realm == "" then return nil, nil end
     end
     _realm, _name = realm, name
     return realm, name
